@@ -5,10 +5,13 @@ RUN docker-php-ext-install mbstring pdo_mysql gd
 
 WORKDIR /var/www
 RUN php -r "readfile('https://getcomposer.org/installer');" | php
-RUN mkdir flarum; cd flarum; php ../composer.phar create-project flarum/flarum . --no-interaction --stability=beta --prefer-source
+RUN mkdir flarum
 ADD config/apache.conf /etc/apache2/sites-enabled/flarum.conf
-RUN chown -R www-data:www-data flarum
 RUN a2enmod rewrite
 
+COPY entrypoint.sh /entrypoint.sh
+
 EXPOSE 80
-CMD apache2-foreground
+
+ENTRYPOINT ["/entrypoint.sh"]
+CMD ["apache2-foreground"]

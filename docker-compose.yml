@@ -7,7 +7,7 @@ services:
     links:
       - db
     volumes:
-      - ./extensions:/var/www/flarum/extensions
+      - ./flarum:/var/www/flarum/
   db:
     image: mariadb
     environment:
