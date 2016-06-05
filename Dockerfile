@@ -6,9 +6,10 @@ RUN docker-php-ext-install mbstring pdo_mysql gd
 WORKDIR /var/www
 RUN php -r "readfile('https://getcomposer.org/installer');" | php
 RUN mkdir flarum
-ADD config/apache.conf /etc/apache2/sites-enabled/flarum.conf
 RUN a2enmod rewrite
 
+COPY config/apache.conf /etc/apache2/sites-enabled/flarum.conf
+COPY config/php.ini /usr/local/etc/php/php.ini
 COPY entrypoint.sh /entrypoint.sh
 
 EXPOSE 80
